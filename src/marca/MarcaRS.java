@@ -4,11 +4,14 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import combustible.CombustibleList;
 
 @Path("/")
 public class MarcaRS {
@@ -68,7 +71,28 @@ public class MarcaRS {
 		msg = "Error";
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
-
+	
+	@PUT
+	@Path("/update")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb) {
+		marcaList = new MarcaList(false);
+		String msg;
+		if (nomb == null) {
+			msg = "Debe especificar el nombre";
+			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
+		}
+		try {
+			String id = marcaList.update(codi, nomb);
+			msg = " Se ha modificado con el id: " + id;
+			return Response.ok(msg, "text/plain").build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		msg = "No se modifico el album";
+		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
+	}
+	
 	@DELETE
 	@Path("/delete/{codi: \\d+}")
 	@Produces({ MediaType.TEXT_PLAIN })

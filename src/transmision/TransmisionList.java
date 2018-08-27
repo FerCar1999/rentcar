@@ -72,8 +72,8 @@ public class TransmisionList {
 		ResultSet res = st.executeQuery("SELECT * FROM transmision " + whereQuery);
 		while (res.next()) {
 			Transmision tmpTransmision = new Transmision();
-			tmpTransmision.setCodi_trans(Integer.parseInt(res.getString("codi_tran")));
-			tmpTransmision.setNomb_trans(res.getString("nomb_tran"));
+			tmpTransmision.setCodi_tran(Integer.parseInt(res.getString("codi_tran")));
+			tmpTransmision.setNomb_tran(res.getString("nomb_tran"));
 			arts.add(tmpTransmision);
 		}
 		return arts;

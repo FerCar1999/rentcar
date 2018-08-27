@@ -4,6 +4,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -72,16 +73,16 @@ public class CombustibleRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") String codi,@FormParam("nomb") String nomb) {
-		albumList = new AlbumList(false);
+	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb) {
+		combustibleList = new CombustibleList(false);
 		String msg;
-		if (name == null) {
-			msg = "Debe especificar el nombre del album";
+		if (nomb == null) {
+			msg = "Debe especificar el nombre";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String id = albumList.update(codi, nomb);
-			msg = name + " Se ha modificado con el id: " + id;
+			String id = combustibleList.update(codi, nomb);
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();

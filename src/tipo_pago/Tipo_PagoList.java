@@ -71,9 +71,9 @@ public class Tipo_PagoList {
 		Statement st = conn.createStatement();
 		ResultSet res = st.executeQuery("SELECT * FROM tipo_pago " + whereQuery);
 		while (res.next()) {
-			Tipo_Pago tmpTipo_Pagos = new Tipo_Pago();
+			Tipo_Pago tmpTipo_Pago = new Tipo_Pago();
 			tmpTipo_Pago.setCodi_tipo_pago(Integer.parseInt(res.getString("codi_tipo_pago")));
-			tmpTipo_Pago.setNomb_tipo_pago(res.getString("tipo_pago"));
+			tmpTipo_Pago.setTipo_pago(res.getString("tipo_pago"));
 			arts.add(tmpTipo_Pago);
 		}
 		return arts;

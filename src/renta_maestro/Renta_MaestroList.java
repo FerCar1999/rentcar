@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 
 @XmlRootElement(name = "rentaMaestroList")
 @XmlSeeAlso({ Renta_Maestro.class })
-public class Resta_MaestroList {
+public class Renta_MaestroList {
 	private List<Renta_Maestro> arts;
 	String url = "jdbc:mysql://localhost:3306/";
 	String dbName = "rentadb";
@@ -22,21 +22,21 @@ public class Resta_MaestroList {
 	String password = "";
 	String param;
 
-	Resta_MaestroList() {
-		arts = new CopyOnWriteArrayList<Combustible>();
+	Renta_MaestroList() {
+		arts = new CopyOnWriteArrayList<Renta_Maestro>();
 		param = null;
 	}
 
-	Resta_MaestroList(String nomb) {
-		arts = new CopyOnWriteArrayList<Combustible>();
+	Renta_MaestroList(String nomb) {
+		arts = new CopyOnWriteArrayList<Renta_Maestro>();
 		param = nomb;
 	}
 
-	Resta_MaestroList(boolean charge) {
+	Renta_MaestroList(boolean charge) {
 		if (charge == false) {
 //don't load data
 		} else {
-			arts = new CopyOnWriteArrayList<Combustible>();
+			arts = new CopyOnWriteArrayList<Renta_Maestro>();
 			param = null;
 		}
 	}

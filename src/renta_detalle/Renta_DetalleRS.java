@@ -4,6 +4,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -52,15 +53,15 @@ public class Renta_DetalleRS {
 	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("nomb") String nomb) {
+	public Response Update(@FormParam("usua") int usua,@FormParam("vehi") int vehi,@FormParam("fechRe") String fechRe,@FormParam("fechDe") String fechDe,@FormParam("tipo") int tipo) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
-		if (nomb == null) {
-			msg = "Debe especificar el combustible";
+		if (usua == 0) {
+			msg = "No esta logeado";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String resp = renta_detalleList.add(nomb);
+			String resp = renta_detalleList.add(usua,vehi,fechRe,fechDe,tipo);
 			return Response.ok(resp, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,36 +73,36 @@ public class Renta_DetalleRS {
 	@PUT
 	@Path("/updateTotal")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") String codi,@FormParam("total") double total) {
+	public Response Update(@FormParam("codi") int codi,@FormParam("total") double total) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
-		if (total == null) {
-			msg = "Debe especificar el total";
+		if (total == 0.00) {
+			msg = "El total no puede ser 0";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
 			String id = renta_detalleList.updateTotal(codi, total);
-			msg = name + " Se ha modificado con el id: " + id;
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		msg = "No se modifico el album";
+		msg = "No se modifico";
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 	@PUT
 	@Path("/updateEsta")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") String codi,@FormParam("esta") String esta) {
+	public Response Update(@FormParam("codi") int codi,@FormParam("esta") int esta) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
-		if (esta == null) {
+		if (esta < 0) {
 			msg = "Debe especificar el estado";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String id = renta_detalleList.updateEsta(codi, esta);
-			msg = name + " Se ha modificado con el id: " + id;
+			String id = renta_detalleList.updateEstado(codi, esta);
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();

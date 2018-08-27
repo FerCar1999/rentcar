@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
-@ApplicationPath("/Combustible")
+@ApplicationPath("/TipoPago")
 /*Extiende a javax.ws.rs.core.Application*/
 public class Tipo_PagoRestful extends Application{
 public Set<Class<?>> getClasses(){

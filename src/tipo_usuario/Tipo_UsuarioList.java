@@ -72,8 +72,8 @@ public class Tipo_UsuarioList {
 		ResultSet res = st.executeQuery("SELECT * FROM tipo_usuario " + whereQuery);
 		while (res.next()) {
 			Tipo_Usuario tmpTipo_Usuario = new Tipo_Usuario();
-			tmpTipo_Usuario.setCodi_tipo_usua(Integer.parseInt(res.getString("codi_tipo")));
-			tmpTipo_Usuario.setNomb_tipo_usua(res.getString("tipo_usua"));
+			tmpTipo_Usuario.setCodi_tipo(Integer.parseInt(res.getString("codi_tipo")));
+			tmpTipo_Usuario.setTipo_usua(res.getString("tipo_usua"));
 			arts.add(tmpTipo_Usuario);
 		}
 		return arts;

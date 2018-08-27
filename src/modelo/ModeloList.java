@@ -97,7 +97,7 @@ public class ModeloList {
 		return 0;
 	}
 	
-	public String update(int codi,String nomb, String codi_marc) throws Exception {
+	public String update(int codi,String nomb, int codi_marc) throws Exception {
 		String resp = "0";
 		try {
 			Connection conn = conn();

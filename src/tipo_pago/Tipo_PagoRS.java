@@ -4,6 +4,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -72,16 +73,16 @@ public class Tipo_PagoRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") String codi,@FormParam("nomb") String nomb) {
+	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb) {
 		tipo_pagoList = new Tipo_PagoList(false);
 		String msg;
-		if (name == null) {
-			msg = "Debe especificar el nombre del album";
+		if (nomb == null) {
+			msg = "Debe especificar el nombre";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
 			String id = tipo_pagoList.update(codi, nomb);
-			msg = name + " Se ha modificado con el id: " + id;
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();

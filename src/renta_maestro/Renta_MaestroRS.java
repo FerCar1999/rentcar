@@ -4,6 +4,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -55,8 +56,8 @@ public class Renta_MaestroRS {
 	public Response Update(@FormParam("usua") int usua, @FormParam("serv") int serv, @FormParam("desc") String desc) {
 		rentaMaestroList = new Renta_MaestroList(false);
 		String msg;
-		if (nomb == null) {
-			msg = "Debe especificar el combustible";
+		if (usua == 0) {
+			msg = "Debe estar logeado";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
@@ -72,16 +73,16 @@ public class Renta_MaestroRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") int codi,@FormParam("serv") int serv, @FormParam("desc") String desc) {
+	public Response UpdateX(@FormParam("codi") int codi,@FormParam("serv") int serv, @FormParam("desc") String desc) {
 		rentaMaestroList = new Renta_MaestroList(false);
 		String msg;
-		if (name == null) {
-			msg = "Debe especificar el nombre del album";
+		if (codi == 0) {
+			msg = "Debe especificar el maestro";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
 			String id = rentaMaestroList.update(codi, serv, desc);
-			msg = name + " Se ha modificado con el id: " + id;
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();

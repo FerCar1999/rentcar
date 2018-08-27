@@ -84,7 +84,7 @@ public class Renta_DetalleList {
 		}
 		return arts;
 	}
-	public String add(String codi_usua, String codi_vehi, String fech_rent, String fech_devo, String tipo_pago) throws Exception {
+	public String add(int codi_usua, int codi_vehi, String fech_rent, String fech_devo, int tipo_pago) throws Exception {
 		String resp = "0";
 		try {
 			Connection conn = conn();
@@ -119,7 +119,7 @@ public class Renta_DetalleList {
 		return 0;
 	}
 
-	public String updateEstado(int codi,String esta) throws Exception {
+	public String updateEstado(int codi,int esta) throws Exception {
 		String resp = "0";
 		try {
 			Connection conn = conn();

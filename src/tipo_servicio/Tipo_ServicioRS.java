@@ -4,6 +4,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -75,13 +76,13 @@ public class Tipo_ServicioRS {
 	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb,@FormParam("prec") double prec) {
 		tipo_servicioList = new Tipo_ServicioList(false);
 		String msg;
-		if (name == null) {
+		if (codi == 0) {
 			msg = "Debe especificar el nombre del album";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String id = albumList.update(codi, nomb);
-			msg = name + " Se ha modificado con el id: " + id;
+			String id = tipo_servicioList.update(codi, nomb,prec);
+			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();

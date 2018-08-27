@@ -22,7 +22,7 @@ public class Tipo_VehiculoList {
 	String param;
 
 	Tipo_VehiculoList() {
-		arts = new CopyOnWriteArrayList<Tipo_Pago>();
+		arts = new CopyOnWriteArrayList<Tipo_Vehiculo>();
 		param = null;
 	}
 
