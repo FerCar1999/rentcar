@@ -19,7 +19,7 @@ public class Renta_DetalleList {
 	String dbName = "rentadb";
 	String driver = "com.mysql.jdbc.Driver";
 	String userName = "root";
-	String password = "6178";
+	String password = "";
 	String param;
 
 	Renta_DetalleList() {
