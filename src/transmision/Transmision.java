@@ -9,7 +9,7 @@ public class Transmision {
 	public int getCodi_tran() {
 		return codi_tran;
 	}
-	@XmlElement
+	
 	public void setCodi_tran(int codi_tran) {
 		this.codi_tran = codi_tran;
 	}
@@ -17,7 +17,7 @@ public class Transmision {
 	public String getNomb_tran() {
 		return nomb_tran;
 	}
-	@XmlElement
+
 	public void setNomb_tran(String nomb_tran) {
 		this.nomb_tran = nomb_tran;
 	}

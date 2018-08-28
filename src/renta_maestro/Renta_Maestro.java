@@ -11,7 +11,7 @@ public class Renta_Maestro {
 	public int getCodi_rent_maes() {
 		return codi_rent_maes;
 	}
-	@XmlElement
+
 	public void setCodi_rent_maes(int codi_rent_maes) {
 		this.codi_rent_maes = codi_rent_maes;
 	}
@@ -19,7 +19,7 @@ public class Renta_Maestro {
 	public int getCodi_rent_deta() {
 		return codi_rent_deta;
 	}
-@XmlElement
+
 	public void setCodi_rent_deta(int codi_rent_deta) {
 		this.codi_rent_deta = codi_rent_deta;
 	}
@@ -27,7 +27,7 @@ public class Renta_Maestro {
 	public int getCodi_tipo_serv() {
 		return codi_tipo_serv;
 	}
-@XmlElement
+
 	public void setCodi_tipo_serv(int codi_tipo_serv) {
 		this.codi_tipo_serv = codi_tipo_serv;
 	}
@@ -35,7 +35,7 @@ public class Renta_Maestro {
 	public String getDesc_maes() {
 		return desc_maes;
 	}
-@XmlElement
+
 	public void setDesc_maes(String desc_maes) {
 		this.desc_maes = desc_maes;
 	}

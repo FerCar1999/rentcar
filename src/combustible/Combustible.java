@@ -10,7 +10,7 @@ public class Combustible {
 	public int getCodi_comb() {
 		return codi_comb;
 	}
-	@XmlElement
+	
 	public void setCodi_comb(int codi_comb) {
 		this.codi_comb = codi_comb;
 	}
@@ -18,7 +18,7 @@ public class Combustible {
 	public String getNomb_comb() {
 		return nomb_comb;
 	}
-	@XmlElement
+	
 	public void setNomb_comb(String nomb_comb) {
 		this.nomb_comb = nomb_comb;
 	}

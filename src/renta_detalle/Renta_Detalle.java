@@ -15,7 +15,7 @@ public class Renta_Detalle {
 	public int getCodi_rent_deta() {
 		return codi_rent_deta;
 	}
-	@XmlElement
+	
 	public void setCodi_rent_deta(int codi_rent_deta) {
 		this.codi_rent_deta = codi_rent_deta;
 	}
@@ -23,7 +23,7 @@ public class Renta_Detalle {
 	public int getCodi_usua() {
 		return codi_usua;
 	}
-	@XmlElement
+	
 	public void setCodi_usua(int codi_usua) {
 		this.codi_usua = codi_usua;
 	}
@@ -31,7 +31,7 @@ public class Renta_Detalle {
 	public int getCodi_vehi() {
 		return codi_vehi;
 	}
-@XmlElement
+
 	public void setCodi_vehi(int codi_vehi) {
 		this.codi_vehi = codi_vehi;
 	}
@@ -39,7 +39,7 @@ public class Renta_Detalle {
 	public String getFech_rent() {
 		return fech_rent;
 	}
-@XmlElement
+
 	public void setFech_rent(String fech_rent) {
 		this.fech_rent = fech_rent;
 	}
@@ -47,7 +47,7 @@ public class Renta_Detalle {
 	public String getFech_devo() {
 		return fech_devo;
 	}
-@XmlElement
+
 	public void setFech_devo(String fech_devo) {
 		this.fech_devo = fech_devo;
 	}
@@ -55,7 +55,7 @@ public class Renta_Detalle {
 	public double getTota_deta() {
 		return tota_deta;
 	}
-@XmlElement
+
 	public void setTota_deta(double tota_deta) {
 		this.tota_deta = tota_deta;
 	}
@@ -63,7 +63,7 @@ public class Renta_Detalle {
 	public int getTipo_pago() {
 		return tipo_pago;
 	}
-@XmlElement
+
 	public void setTipo_pago(int tipo_pago) {
 		this.tipo_pago = tipo_pago;
 	}
@@ -71,7 +71,7 @@ public class Renta_Detalle {
 	public int getEsta_rent() {
 		return esta_rent;
 	}
-@XmlElement
+
 	public void setEsta_rent(int esta_rent) {
 		this.esta_rent = esta_rent;
 	}

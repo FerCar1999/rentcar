@@ -7,9 +7,9 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/TipoVehiculo")
 /*Extiende a javax.ws.rs.core.Application*/
 public class TransmisionRestful extends Application{
-public Set<Class<?>> getClasses(){
-Set<Class<?>> set = new HashSet<Class<?>>();
-set.add(TransmisionRS.class);
-return set;
-}
+	public Set<Class<?>> getClasses(){
+		Set<Class<?>> set = new HashSet<Class<?>>();
+		set.add(TransmisionRS.class);
+		return set;
+	}
 }

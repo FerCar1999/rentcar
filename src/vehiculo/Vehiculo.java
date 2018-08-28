@@ -22,7 +22,7 @@ public class Vehiculo {
 	public int getCodi_vehi() {
 		return codi_vehi;
 	}
-	@XmlElement
+	
 	public void setCodi_vehi(int codi_vehi) {
 		this.codi_vehi = codi_vehi;
 	}
@@ -30,7 +30,7 @@ public class Vehiculo {
 	public int getCodi_mode() {
 		return codi_mode;
 	}
-	@XmlElement
+	
 	public void setCodi_mode(int codi_mode) {
 		this.codi_mode = codi_mode;
 	}
@@ -38,7 +38,7 @@ public class Vehiculo {
 	public String getAnio_vehi() {
 		return anio_vehi;
 	}
-	@XmlElement
+	
 	public void setAnio_vehi(String anio_vehi) {
 		this.anio_vehi = anio_vehi;
 	}
@@ -46,7 +46,7 @@ public class Vehiculo {
 	public int getCodi_tran() {
 		return codi_tran;
 	}
-	@XmlElement
+	
 	public void setCodi_tran(int codi_tran) {
 		this.codi_tran = codi_tran;
 	}
@@ -54,7 +54,7 @@ public class Vehiculo {
 	public int getPasa_vehi() {
 		return pasa_vehi;
 	}
-	@XmlElement
+	
 	public void setPasa_vehi(int pasa_vehi) {
 		this.pasa_vehi = pasa_vehi;
 	}
@@ -62,7 +62,7 @@ public class Vehiculo {
 	public int getPuer_vehi() {
 		return puer_vehi;
 	}
-	@XmlElement
+	
 	public void setPuer_vehi(int puer_vehi) {
 		this.puer_vehi = puer_vehi;
 	}
@@ -70,7 +70,7 @@ public class Vehiculo {
 	public int getAire_vehi() {
 		return aire_vehi;
 	}
-	@XmlElement
+	
 	public void setAire_vehi(int aire_vehi) {
 		this.aire_vehi = aire_vehi;
 	}
@@ -78,7 +78,7 @@ public class Vehiculo {
 	public String getAudi_vehi() {
 		return audi_vehi;
 	}
-	@XmlElement
+	
 	public void setAudi_vehi(String audi_vehi) {
 		this.audi_vehi = audi_vehi;
 	}
@@ -86,7 +86,7 @@ public class Vehiculo {
 	public int getCodi_comb() {
 		return codi_comb;
 	}
-	@XmlElement
+	
 	public void setCodi_comb(int codi_comb) {
 		this.codi_comb = codi_comb;
 	}
@@ -94,7 +94,7 @@ public class Vehiculo {
 	public int getCodi_lice() {
 		return codi_lice;
 	}
-	@XmlElement
+	
 	public void setCodi_lice(int codi_lice) {
 		this.codi_lice = codi_lice;
 	}
@@ -102,7 +102,7 @@ public class Vehiculo {
 	public int getEsta_vehi() {
 		return esta_vehi;
 	}
-	@XmlElement
+	
 	public void setEsta_vehi(int esta_vehi) {
 		this.esta_vehi = esta_vehi;
 	}
@@ -110,7 +110,7 @@ public class Vehiculo {
 	public String getFoto_vehi() {
 		return foto_vehi;
 	}
-	@XmlElement
+	
 	public void setFoto_vehi(String foto_vehi) {
 		this.foto_vehi = foto_vehi;
 	}
@@ -118,7 +118,7 @@ public class Vehiculo {
 	public double getPrec_vehi() {
 		return prec_vehi;
 	}
-	@XmlElement
+	
 	public void setPrec_vehi(double prec_vehi) {
 		this.prec_vehi = prec_vehi;
 	}
@@ -126,7 +126,7 @@ public class Vehiculo {
 	public int getCodi_tipo() {
 		return codi_tipo;
 	}
-	@XmlElement
+	
 	public void setCodi_tipo(int codi_tipo) {
 		this.codi_tipo = codi_tipo;
 	}

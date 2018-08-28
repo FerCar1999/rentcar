@@ -19,7 +19,7 @@ public class Tipo_UsuarioList {
 	String dbName = "rentadb";
 	String driver = "com.mysql.jdbc.Driver";
 	String userName = "root";
-	String password = "";
+	String password = "6178";
 	String param;
 
 	Tipo_UsuarioList() {

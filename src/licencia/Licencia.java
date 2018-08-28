@@ -10,7 +10,7 @@ public class Licencia {
 	public int getCodi_lice() {
 		return codi_lice;
 	}
-	@XmlElement
+	
 	public void setCodi_lice(int codi_lice) {
 		this.codi_lice = codi_lice;
 	}
@@ -18,7 +18,7 @@ public class Licencia {
 	public String getNomb_lice() {
 		return nomb_lice;
 	}
-	@XmlElement
+	
 	public void setNomb_lice(String nomb_lice) {
 		this.nomb_lice = nomb_lice;
 	}

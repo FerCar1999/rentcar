@@ -9,7 +9,7 @@ public class Marca {
 	public int getCodi_marc() {
 		return codi_marc;
 	}
-	@XmlElement
+
 	public void setCodi_marc(int codi_marc) {
 		this.codi_marc = codi_marc;
 	}
@@ -17,7 +17,7 @@ public class Marca {
 	public String getNomb_marc() {
 		return nomb_marc;
 	}
-	@XmlElement
+
 	public void setNomb_marc(String nomb_marc) {
 		this.nomb_marc = nomb_marc;
 	}
