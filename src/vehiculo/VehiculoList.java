@@ -20,11 +20,11 @@ import vehiculo.Vehiculo;
 @XmlSeeAlso({ Vehiculo.class })
 public class VehiculoList {
 	private List<Vehiculo> arts;
-	String url = "jdbc:mysql://localhost:3306/";
+	String url = "jdbc:mysql://rentadb.c9bf3mte5srb.us-east-2.rds.amazonaws.com:3306/";
 	String dbName = "rentadb";
 	String driver = "com.mysql.jdbc.Driver";
-	String userName = "root";
-	String password = "";
+	String userName = "adminrenta";
+	String password = "fslrenta";
 	String param;
 
 	VehiculoList() {

@@ -1,7 +1,9 @@
+/combustible/
 /licencia/
 /marca/
-/renta_detalle/
 /modelo/
+/renta_detalle/
+/renta_maestro/
 /tipo_pago/
 /tipo_servicio/
 /tipo_usuario/
@@ -9,4 +11,3 @@
 /transmision/
 /usuario/
 /vehiculo/
-/renta_maestro/
