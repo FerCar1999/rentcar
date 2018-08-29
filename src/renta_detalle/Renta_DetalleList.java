@@ -94,7 +94,7 @@ public class Renta_DetalleList {
 		try {
 			Connection conn = conn();
 			Statement st = conn.createStatement();
-			String sql = "INSERT INTO renta_detalle(codi_usua, codi_vehi, fech_rent, fech_devo, tota_deta, tipo_pago, esta_rent) VALUES('"+codi_usua+"','"+codi_vehi+"','"+fech_rent+"','"+fech_devo+"',SELECT prec_vehi FROM vehiculo WHERE vehiculo.codi_vehi = '"+codi_vehi+"','"+tipo_pago+"',0)";
+			String sql = "INSERT INTO renta_detalle(codi_usua, codi_vehi, fech_rent, fech_devo, tota_deta, tipo_pago, esta_rent) VALUES('"+codi_usua+"','"+codi_vehi+"','"+fech_rent+"','"+fech_devo+"',(SELECT prec_vehi FROM vehiculo WHERE vehiculo.codi_vehi = '"+codi_vehi+"'),'"+tipo_pago+"',0)";
 			st.executeUpdate(sql);
 			resp = "1";
 		} catch (Exception e) {
