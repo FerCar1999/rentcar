@@ -6,6 +6,7 @@ public class Renta_Maestro {
 	int codi_rent_maes;
 	int codi_rent_deta;
 	int codi_tipo_serv;
+	String tipo_serv;
 	String desc_maes;
 	@XmlElement
 	public int getCodi_rent_maes() {
@@ -31,6 +32,15 @@ public class Renta_Maestro {
 	public void setCodi_tipo_serv(int codi_tipo_serv) {
 		this.codi_tipo_serv = codi_tipo_serv;
 	}
+	@XmlElement
+public String getTipo_serv() {
+		return tipo_serv;
+	}
+
+	public void setTipo_serv(String tipo_serv) {
+		this.tipo_serv = tipo_serv;
+	}
+
 @XmlElement
 	public String getDesc_maes() {
 		return desc_maes;

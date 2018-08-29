@@ -65,17 +65,18 @@ public class Renta_MaestroList {
 	public List<Renta_Maestro> getRenta_MaestroList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_rent_maes = '" + param + "'";
+				whereQuery = " WHERE rm.codi_rent_deta = '" + param + "'";
 		}
 		Connection conn = conn();
 		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM renta_maestro " + whereQuery);
+		ResultSet res = st.executeQuery("SELECT rm.codi_rent_maes, rm.codi_rent_deta, ts.codi_tipo_serv, ts.nomb_serv,rm.desc_maes FROM renta_maestro as rm INNER JOIN tipo_servicio as ts ON rm.codi_tipo_serv=ts.codi_tipo_serv " + whereQuery);
 		while (res.next()) {
 			Renta_Maestro tmpRenta_Maestro = new Renta_Maestro();
-			tmpRenta_Maestro.setCodi_rent_maes(Integer.parseInt(res.getString("codi_rent_maes")));
-			tmpRenta_Maestro.setCodi_rent_deta(Integer.parseInt(res.getString("codi_rent_deta")));
-			tmpRenta_Maestro.setCodi_tipo_serv(Integer.parseInt(res.getString("codi_tipo_serv")));
-			tmpRenta_Maestro.setDesc_maes(res.getString("desc_maes"));
+			tmpRenta_Maestro.setCodi_rent_maes(Integer.parseInt(res.getString(1)));
+			tmpRenta_Maestro.setCodi_rent_deta(Integer.parseInt(res.getString(2)));
+			tmpRenta_Maestro.setCodi_tipo_serv(Integer.parseInt(res.getString(3)));
+			tmpRenta_Maestro.setTipo_serv(res.getString(4));
+			tmpRenta_Maestro.setDesc_maes(res.getString(5));
 			arts.add(tmpRenta_Maestro);
 		}
 		return arts;

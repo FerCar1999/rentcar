@@ -65,21 +65,26 @@ public class Renta_DetalleList {
 	public List<Renta_Detalle> getRenta_DetalleList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_rent_deta = '" + param + "'";
+				whereQuery = " WHERE renta_detalle.codi_rent_deta = '" + param + "'";
 		}
 		Connection conn = conn();
 		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM renta_detalle " + whereQuery);
+		ResultSet res = st.executeQuery("SELECT renta_detalle.codi_rent_deta, usuario.codi_usua, usuario.nomb_usua, usuario.apel_usua, vehiculo.codi_vehi, modelo.nomb_mode, marca.nomb_marc, renta_detalle.fech_rent, renta_detalle.fech_devo, renta_detalle.tota_deta, tipo_pago.codi_tipo_pago, tipo_pago.tipo_pago, renta_detalle.esta_rent  FROM (((((renta_detalle INNER JOIN usuario ON renta_detalle.codi_usua = usuario.codi_usua)INNER JOIN vehiculo ON renta_detalle.codi_vehi = vehiculo.codi_vehi)INNER JOIN modelo ON vehiculo.codi_mode = modelo.codi_mode) INNER JOIN marca ON modelo.codi_marc= marca.codi_marc)INNER JOIN tipo_pago ON renta_detalle.tipo_pago=tipo_pago.codi_tipo_pago) " + whereQuery);
 		while (res.next()) {
 			Renta_Detalle tmpRenta_Detalle = new Renta_Detalle();
-			tmpRenta_Detalle.setCodi_rent_deta(Integer.parseInt(res.getString("codi_rent_deta")));
-			tmpRenta_Detalle.setCodi_usua(Integer.parseInt(res.getString("codi_usua")));
-			tmpRenta_Detalle.setCodi_vehi(Integer.parseInt(res.getString("codi_vehi")));
-			tmpRenta_Detalle.setFech_rent(res.getString("fech_rent"));
-			tmpRenta_Detalle.setFech_devo(res.getString("fech_devo"));
-			tmpRenta_Detalle.setTota_deta(Double.parseDouble(res.getString("tota_deta")));
-			tmpRenta_Detalle.setTipo_pago(Integer.parseInt(res.getString("tipo_pago")));
-			tmpRenta_Detalle.setEsta_rent(Integer.parseInt(res.getString("esta_rent")));
+			tmpRenta_Detalle.setCodi_rent_deta(Integer.parseInt(res.getString(1)));
+			tmpRenta_Detalle.setCodi_usua(Integer.parseInt(res.getString(2)));
+			tmpRenta_Detalle.setNomb_usua(res.getString(3));
+			tmpRenta_Detalle.setApel_usua(res.getString(4));
+			tmpRenta_Detalle.setCodi_vehi(Integer.parseInt(res.getString(5)));
+			tmpRenta_Detalle.setMode_vehi(res.getString(6));
+			tmpRenta_Detalle.setMarc_vehi(res.getString(7));
+			tmpRenta_Detalle.setFech_rent(res.getString(8));
+			tmpRenta_Detalle.setFech_devo(res.getString(9));
+			tmpRenta_Detalle.setTota_deta(Double.parseDouble(res.getString(10)));
+			tmpRenta_Detalle.setTipo_pago(Integer.parseInt(res.getString(11)));
+			tmpRenta_Detalle.setNomb_pago(res.getString(12));
+			tmpRenta_Detalle.setEsta_rent(Integer.parseInt(res.getString(13)));
 			arts.add(tmpRenta_Detalle);
 		}
 		return arts;

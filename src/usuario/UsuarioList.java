@@ -70,26 +70,25 @@ public class UsuarioList {
 	public List<Usuario> getUsuarioList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_usua = '" + param + "'";
+				whereQuery = " WHERE us.codi_usua = '" + param + "'";
 		}
 		Connection conn = conn();
 		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("select usuario.codi_usua,usuario.nomb_usua,usuario.apel_usua,usuario.dire_usua,usuario.tele_usua, usuario.dui_usua,\n" + 
-				"usuario.nit_usua,usuario.pasa_usua,usuario.corr_usua,usuario.codi_tipo\n" + 
-				"from usuario  " + whereQuery);
+		ResultSet res = st.executeQuery("SELECT us.*, tu.tipo_usua FROM usuario as us INNER JOIN tipo_usuario as tu ON us.codi_tipo = tu.codi_tipo " + whereQuery);
 		while (res.next()) {
 			Usuario tmpUsuario = new Usuario();
-			tmpUsuario.setCodi_usua(Integer.parseInt(res.getString("codi_usua")));
+			tmpUsuario.setCodi_usua(Integer.parseInt(res.getString(1)));
+			tmpUsuario.setNomb_usua(res.getString(2));
+			tmpUsuario.setApel_usua(res.getString(3));
+			tmpUsuario.setDire_usua(res.getString(4));
+			tmpUsuario.setTele_usua(res.getString(5));
+			tmpUsuario.setDui_usua(res.getString(6));
+			tmpUsuario.setNit_usua(res.getString(7));
+			tmpUsuario.setPasa_usua(res.getString(8));
+			tmpUsuario.setCorr_usua(res.getString(9));
 			tmpUsuario.setCont_usua(null);
-			tmpUsuario.setApel_usua(res.getString("apel_usua"));
-			tmpUsuario.setNomb_usua(res.getString("nomb_usua"));
-			tmpUsuario.setNit_usua(res.getString("nit_usua"));
-			tmpUsuario.setDui_usua(res.getString("dui_usua"));
-			tmpUsuario.setDire_usua(res.getString("dire_usua"));
-			tmpUsuario.setCodi_tipo(Integer.parseInt(res.getString("codi_tipo")));
-			tmpUsuario.setCorr_usua(res.getString("corr_usua"));
-			tmpUsuario.setTele_usua(res.getString("tele_usua"));
-			tmpUsuario.setPasa_usua(res.getString("pasa_usua"));
+			tmpUsuario.setCodi_tipo(Integer.parseInt(res.getString(11)));
+			tmpUsuario.setNomb_tipo(res.getString(12));
 			arts.add(tmpUsuario);
 		}
 		return arts;

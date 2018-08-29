@@ -5,19 +5,24 @@ import javax.xml.bind.annotation.XmlElement;
 public class Vehiculo {
 	int codi_vehi;
 	int codi_mode;
+	String nomb_mode;
+	String nomb_marc;
 	String anio_vehi;
 	int codi_tran;
+	String nomb_tran;
 	int pasa_vehi;
 	int puer_vehi;
 	int aire_vehi;
 	String audi_vehi;
 	int codi_comb;
+	String nomb_comb;
 	int codi_lice;
+	String nomb_lice;
 	int esta_vehi;
 	String foto_vehi;
 	double prec_vehi;
 	int codi_tipo;
-	
+	String nomb_tipo;
 	@XmlElement
 	public int getCodi_vehi() {
 		return codi_vehi;
@@ -130,4 +135,54 @@ public class Vehiculo {
 	public void setCodi_tipo(int codi_tipo) {
 		this.codi_tipo = codi_tipo;
 	}
+	@XmlElement
+	public String getNomb_mode() {
+		return nomb_mode;
+	}
+
+	public void setNomb_mode(String nomb_mode) {
+		this.nomb_mode = nomb_mode;
+	}
+	@XmlElement
+	public String getNomb_marc() {
+		return nomb_marc;
+	}
+
+	public void setNomb_marc(String nomb_marc) {
+		this.nomb_marc = nomb_marc;
+	}
+	@XmlElement
+	public String getNomb_tran() {
+		return nomb_tran;
+	}
+
+	public void setNomb_tran(String nomb_tran) {
+		this.nomb_tran = nomb_tran;
+	}
+	@XmlElement
+	public String getNomb_comb() {
+		return nomb_comb;
+	}
+
+	public void setNomb_comb(String nomb_comb) {
+		this.nomb_comb = nomb_comb;
+	}
+	@XmlElement
+	public String getNomb_lice() {
+		return nomb_lice;
+	}
+
+	public void setNomb_lice(String nomb_lice) {
+		this.nomb_lice = nomb_lice;
+	}
+	@XmlElement
+	public String getNomb_tipo() {
+		return nomb_tipo;
+	}
+
+	public void setNomb_tipo(String nomb_tipo) {
+		this.nomb_tipo = nomb_tipo;
+	}
+	
+	
 }

@@ -70,28 +70,33 @@ public class VehiculoList {
 	public List<Vehiculo> getVehiculoList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_vehi = '" + param + "'";
+				whereQuery = " WHERE ve.codi_vehi = '" + param + "'";
 		}
 		Connection conn = conn();
 		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT codi_vehi, codi_mode, anio_vehi, codi_tran, pasa_vehi, puer_vehi, aire_vehi, audi_vehi, codi_comb, codi_lice, esta_vehi, foto_vehi, prec_vehi, codi_tipo\n" + 
-				"FROM rentadb.vehiculo  " + whereQuery);
+		ResultSet res = st.executeQuery("SELECT ve.codi_vehi, mo.codi_mode, mo.nomb_mode, ma.nomb_marc,ve.anio_vehi, tr.codi_tran, tr.nomb_tran, ve.pasa_vehi, ve.puer_vehi, ve.aire_vehi,ve.audi_vehi, co.codi_comb, co.nomb_comb, li.codi_lice,li.nomb_lice, ve.esta_vehi, ve.foto_vehi, ve.prec_vehi, tp.codi_tipo, tp.tipo_vehi FROM vehiculo as ve INNER JOIN modelo as mo ON ve.codi_mode = mo.codi_mode INNER JOIN marca ma ON mo.codi_marc= ma.codi_marc INNER JOIN transmision as tr ON ve.codi_tran = tr.codi_tran INNER JOIN combustible as co ON ve.codi_comb = co.codi_comb INNER JOIN licencia as li ON ve.codi_lice=li.codi_lice INNER JOIN tipo_vehiculo as tp ON ve.codi_tipo=tp.codi_tipo " + whereQuery);
 		while (res.next()) {
 			Vehiculo tmpVehiculo = new Vehiculo();
-			tmpVehiculo.setCodi_vehi(Integer.parseInt(res.getString("codi_vehi")));
-			tmpVehiculo.setCodi_mode(Integer.parseInt(res.getString("codi_mode")));
-			tmpVehiculo.setAnio_vehi(res.getString("anio_vehi"));
-			tmpVehiculo.setCodi_tran(Integer.parseInt(res.getString("codi_tran")));
-			tmpVehiculo.setPasa_vehi(Integer.parseInt(res.getString("pasa_vehi")));
-			tmpVehiculo.setPuer_vehi(Integer.parseInt(res.getString("aire_vehi")));
-			tmpVehiculo.setAudi_vehi(res.getString("audi_vehi"));
-			tmpVehiculo.setAire_vehi(Integer.parseInt(res.getString("aire_vehi")));
-			tmpVehiculo.setCodi_comb(Integer.parseInt(res.getString("codi_comb")));
-			tmpVehiculo.setCodi_lice(Integer.parseInt(res.getString("codi_lice")));
-			tmpVehiculo.setEsta_vehi(Integer.parseInt(res.getString("esta_vehi")));
-			tmpVehiculo.setFoto_vehi(res.getString("foto_vehi"));
-			tmpVehiculo.setPrec_vehi(Double.parseDouble(res.getString("prec_vehi")));
-			tmpVehiculo.setCodi_tipo(Integer.parseInt(res.getString("codi_tipo")));
+			tmpVehiculo.setCodi_vehi(Integer.parseInt(res.getString(1)));
+			tmpVehiculo.setCodi_mode(Integer.parseInt(res.getString(2)));
+			tmpVehiculo.setNomb_mode(res.getString(3));
+			tmpVehiculo.setNomb_marc(res.getString(4));
+			tmpVehiculo.setAnio_vehi(res.getString(5));
+			tmpVehiculo.setCodi_tran(Integer.parseInt(res.getString(6)));
+			tmpVehiculo.setNomb_tran(res.getString(7));
+			tmpVehiculo.setPasa_vehi(Integer.parseInt(res.getString(8)));
+			tmpVehiculo.setPuer_vehi(Integer.parseInt(res.getString(9)));
+			tmpVehiculo.setAire_vehi(Integer.parseInt(res.getString(10)));
+			tmpVehiculo.setAudi_vehi(res.getString(11));
+			tmpVehiculo.setCodi_comb(Integer.parseInt(res.getString(12)));
+			tmpVehiculo.setNomb_comb(res.getString(13));
+			tmpVehiculo.setCodi_lice(Integer.parseInt(res.getString(14)));
+			tmpVehiculo.setNomb_lice(res.getString(15));
+			tmpVehiculo.setEsta_vehi(Integer.parseInt(res.getString(16)));
+			tmpVehiculo.setFoto_vehi(res.getString(17));
+			tmpVehiculo.setPrec_vehi(Double.parseDouble(res.getString(18)));
+			tmpVehiculo.setCodi_tipo(Integer.parseInt(res.getString(19)));
+			tmpVehiculo.setNomb_tipo(res.getString(20));
 			tmpVehiculo.setPuer_vehi(Integer.parseInt(res.getString("puer_vehi")));
 			arts.add(tmpVehiculo);
 		}

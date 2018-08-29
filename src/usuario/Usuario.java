@@ -14,6 +14,7 @@ public class Usuario {
 	String corr_usua;
 	String cont_usua;
 	int codi_tipo;
+	String nomb_tipo;
 	@XmlElement
 	public int getCodi_usua() {
 		return codi_usua;
@@ -102,4 +103,13 @@ public class Usuario {
 	public void setCodi_tipo(int codi_tipo) {
 		this.codi_tipo = codi_tipo;
 	}
+	@XmlElement
+	public String getNomb_tipo() {
+		return nomb_tipo;
+	}
+
+	public void setNomb_tipo(String nomb_tipo) {
+		this.nomb_tipo = nomb_tipo;
+	}
+	
 }

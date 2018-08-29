@@ -69,12 +69,13 @@ public class ModeloList {
 		}
 		Connection conn = conn();
 		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM modelo " + whereQuery);
+		ResultSet res = st.executeQuery("SELECT mode.codi_mode, mode.nomb_mode, marc.* FROM modelo as mode INNER JOIN marca as marc ON mode.codi_marc=marc.codi_marc " + whereQuery);
 		while (res.next()) {
 			Modelo tmpModelo = new Modelo();
-			tmpModelo.setCodi_mode(Integer.parseInt(res.getString("codi_mode")));
-			tmpModelo.setNomb_mode(res.getString("nomb_mode"));
-			tmpModelo.setCodi_marc(Integer.parseInt(res.getString("codi_marc")));
+			tmpModelo.setCodi_mode(Integer.parseInt(res.getString(1)));
+			tmpModelo.setNomb_mode(res.getString(2));
+			tmpModelo.setCodi_marc(res.getInt(3));
+			tmpModelo.setNomb_marc(res.getString(4));
 			arts.add(tmpModelo);
 		}
 		return arts;
