@@ -56,32 +56,6 @@ public class UsuarioRS {
 	}
 	
 	@POST
-	@Path("/login")
-	@Produces({MediaType.TEXT_PLAIN})
-	public Response Login(@FormParam("corr") String corr, @FormParam("cont") String cont) {
-		String msg;
-		usuarioList = new UsuarioList(false);
-		if (corr == null) {
-			msg = "Debe ingresar su correo";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (cont == null) {
-			msg = "Debe ingresar su contraseña";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		try {
-			String resp = usuarioList.login(corr, cont);
-			if (resp.equals("1")) {
-				return Response.ok(resp, "text/plain").build();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		msg = "No se pudo logear";
-		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-	}
-
-	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
 	public Response Update(@FormParam("nomb_usua") String nomb_usua,@FormParam("apel_usua") String apel_usua,@FormParam("dire_usua") String dire_usua,@FormParam("tele_usua") String tele_usua,

@@ -31,7 +31,7 @@ public class UsuarioList {
 		arts = new CopyOnWriteArrayList<Usuario>();
 		param = null;
 	}
-
+	
 	UsuarioList(String nomb) {
 		arts = new CopyOnWriteArrayList<Usuario>();
 		param = nomb;
@@ -94,22 +94,6 @@ public class UsuarioList {
 		return arts;
 	}
 	
-	public String login(String corr_usua, String cont_usua) {
-		String resp= "0";
-		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String pass_usua=encriptar(cont_usua);
-			ResultSet res = st.executeQuery("SELECT COUNT(*) FROM usuario WHERE corr_usua = '"+corr_usua+"' AND cont_usua ='"+pass_usua+"' ");
-			while(res.next()) {
-				resp = res.getString(1);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return resp;
-	}
-	
 	public String add(String nomb_usua,String apel_usua,String dire_usua,String tele_usua,String dui_usua,String nit_usua, String pasa_usua, String corr_usua, int codi_tipo,String cont_usua) throws Exception {
 		String resp = "0";
 		try {
@@ -137,10 +121,7 @@ public class UsuarioList {
 		try {
 			Connection conn = conn();
 			Statement st = conn.createStatement();
-			String sql = "UPDATE rentadb.usuario\n" + 
-					"SET nomb_usua='"+nomb_usua+"', apel_usua='"+apel_usua+"', dire_usua='"+dire_usua+"', dui_usua='"+tele_usua+"', nit_usua='"+nit_usua+"', pasa_usua='"+pasa_usua+"', corr_usua='"+corr_usua+"', cont_usua='"+encriptar(cont_usua)+"', codi_tipo='"+codi_tipo+"',tele_usua='"+tele_usua+"'\n" + 
-					"WHERE codi_usua='"+codi_usua+"';\n" + 
-					"";
+			String sql = "UPDATE usuario SET nomb_usua='"+nomb_usua+"', apel_usua='"+apel_usua+"', dire_usua='"+dire_usua+"', dui_usua='"+dui_usua+"', nit_usua='"+nit_usua+"', pasa_usua='"+pasa_usua+"', corr_usua='"+corr_usua+"', cont_usua='"+encriptar(cont_usua)+"', codi_tipo='"+codi_tipo+"',tele_usua='"+tele_usua+"' WHERE codi_usua='"+codi_usua+"'";
 			st.executeUpdate(sql);
 			resp= "1";
 		} catch (Exception e) {
