@@ -12,25 +12,24 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
 import vehiculo.VehiculoList;
+
 /**
  * Servlet implementation class VehiculoRS
  */
 @Path("/")
-public class VehiculoRS  {
+public class VehiculoRS {
 	private static VehiculoList vehiculoList;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public VehiculoRS() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    
-   
-    @GET
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public VehiculoRS() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@GET
 	@Path("/xml")
 	@Produces({ MediaType.APPLICATION_XML })
 	public VehiculoList getXml() {
@@ -65,17 +64,19 @@ public class VehiculoRS  {
 	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi_mode") int codi_mode,@FormParam("anio_vehi") String anio_vehi,@FormParam("codi_tran") int codi_tran,
-			@FormParam("pasa_vehi") int pasa_vehi,@FormParam("puer_vehi") int puer_vehi,@FormParam("aire_vehi") int aire_vehi,
-			@FormParam("audi_vehi") String audi_vehi,@FormParam("codi_comb") int codi_comb,@FormParam("codi_lice") int codi_lice,@FormParam("esta_vehi") int esta_vehi,
-			@FormParam("foto_vehi") String foto_vehi,@FormParam("prec_vehi") double prec_vehi,@FormParam("codi_tipo") int codi_tipo) {
+	public Response Update(@FormParam("codi_mode") int codi_mode, @FormParam("anio_vehi") String anio_vehi,
+			@FormParam("codi_tran") int codi_tran, @FormParam("pasa_vehi") int pasa_vehi,
+			@FormParam("puer_vehi") int puer_vehi, @FormParam("aire_vehi") int aire_vehi,
+			@FormParam("audi_vehi") String audi_vehi, @FormParam("codi_comb") int codi_comb,
+			@FormParam("codi_lice") int codi_lice, @FormParam("codi_tipo") int codi_tipo,
+			@FormParam("depo_vehi") double depo_vehi) {
 		vehiculoList = new VehiculoList(false);
 		String msg;
 		if (codi_mode < 1) {
 			msg = "Debe especificar el modelo del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (anio_vehi ==null) {
+		if (anio_vehi == null) {
 			msg = "Debe especificar el año del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
@@ -95,37 +96,25 @@ public class VehiculoRS  {
 			msg = "Debe especificar si el carro posee A/C o no";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (audi_vehi ==null) {
+		if (audi_vehi == null) {
 			msg = "audi_vehi";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (codi_comb<1) {
+		if (codi_comb < 1) {
 			msg = "codi_comb";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (codi_lice<1) {
+		if (codi_lice < 1) {
 			msg = "Debe especificar el tipo de licencia";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (esta_vehi<1) {
-			msg = "Debe especificar el estado de el vehiculo";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (foto_vehi==null) {
-			msg = "Debe seleccionar la foto";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (prec_vehi<0.01) {
-			msg = "Debe especificar el precio del vehiculo";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (codi_tipo<1) {
+		if (codi_tipo < 1) {
 			msg = "Debe especificar el tipo del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String resp = vehiculoList.add(codi_mode,anio_vehi,codi_tran,pasa_vehi,puer_vehi,aire_vehi,audi_vehi,codi_comb,codi_lice,esta_vehi, 
-					foto_vehi,prec_vehi,codi_tipo);
+			String resp = vehiculoList.add(codi_mode, anio_vehi, codi_tran, pasa_vehi, puer_vehi, aire_vehi, audi_vehi,
+					codi_comb, codi_lice, codi_tipo, depo_vehi);
 			return Response.ok(resp, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -137,10 +126,12 @@ public class VehiculoRS  {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi_vehi") int codi_vehi,@FormParam("codi_mode") int codi_mode,@FormParam("anio_vehi") String anio_vehi,@FormParam("codi_tran") int codi_tran,
-			@FormParam("pasa_vehi") int pasa_vehi,@FormParam("puer_vehi") int puer_vehi,@FormParam("aire_vehi") int aire_vehi,
-			@FormParam("audi_vehi") String audi_vehi,@FormParam("codi_comb") int codi_comb,@FormParam("codi_lice") int codi_lice,@FormParam("esta_vehi") int esta_vehi,
-			@FormParam("foto_vehi") String foto_vehi,@FormParam("prec_vehi") double prec_vehi,@FormParam("codi_tipo") int codi_tipo) {
+	public Response Update(@FormParam("codi_vehi") int codi_vehi, @FormParam("codi_mode") int codi_mode,
+			@FormParam("anio_vehi") String anio_vehi, @FormParam("codi_tran") int codi_tran,
+			@FormParam("pasa_vehi") int pasa_vehi, @FormParam("puer_vehi") int puer_vehi,
+			@FormParam("aire_vehi") int aire_vehi, @FormParam("audi_vehi") String audi_vehi,
+			@FormParam("codi_comb") int codi_comb, @FormParam("codi_lice") int codi_lice,
+			@FormParam("codi_tipo") int codi_tipo, @FormParam("depo_vehi") double depo_vehi) {
 		vehiculoList = new VehiculoList(false);
 		String msg;
 		if (codi_vehi < 1) {
@@ -151,7 +142,7 @@ public class VehiculoRS  {
 			msg = "Debe especificar el modelo del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (anio_vehi ==null) {
+		if (anio_vehi == null) {
 			msg = "Debe especificar el año del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
@@ -171,37 +162,25 @@ public class VehiculoRS  {
 			msg = "Debe especificar si el carro posee A/C o no";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (audi_vehi ==null) {
+		if (audi_vehi == null) {
 			msg = "audi_vehi";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (codi_comb<1) {
+		if (codi_comb < 1) {
 			msg = "codi_comb";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (codi_lice<1) {
+		if (codi_lice < 1) {
 			msg = "Debe especificar el tipo de licencia";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (esta_vehi<1) {
-			msg = "Debe especificar el estado de el vehiculo";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (foto_vehi==null) {
-			msg = "Debe seleccionar la foto";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (prec_vehi<0.01) {
-			msg = "Debe especificar el precio del vehiculo";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (codi_tipo<1) {
+		if (codi_tipo < 1) {
 			msg = "Debe especificar el tipo del vehiculo";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String id = vehiculoList.update(codi_vehi, codi_mode,anio_vehi,codi_tran,pasa_vehi,puer_vehi,aire_vehi,audi_vehi,codi_comb,codi_lice,esta_vehi, 
-					foto_vehi,prec_vehi,codi_tipo);
+			String id = vehiculoList.update(codi_vehi, codi_mode, anio_vehi, codi_tran, pasa_vehi, puer_vehi, aire_vehi,
+					audi_vehi, codi_comb, codi_lice, codi_tipo, depo_vehi);
 			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
@@ -235,5 +214,5 @@ public class VehiculoRS  {
 		}
 		return Response.ok(msg, "text/plain").build();
 	}
-	
+
 }

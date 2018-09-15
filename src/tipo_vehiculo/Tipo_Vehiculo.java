@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class Tipo_Vehiculo {
 	int codi_tipo;
 	String tipo_vehi;
+	int esta_tipo_vehi;
 	@XmlElement
 	public int getCodi_tipo() {
 		return codi_tipo;
@@ -20,6 +21,14 @@ public class Tipo_Vehiculo {
 
 	public void setTipo_vehi(String tipo_vehi) {
 		this.tipo_vehi = tipo_vehi;
+	}
+	@XmlElement
+	public int getEsta_tipo_vehi() {
+		return esta_tipo_vehi;
+	}
+
+	public void setEsta_tipo_vehi(int esta_tipo_vehi) {
+		this.esta_tipo_vehi = esta_tipo_vehi;
 	}
 	
 	

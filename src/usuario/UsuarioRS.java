@@ -1,6 +1,5 @@
 package usuario;
 
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -13,17 +12,20 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import usuario.UsuarioList;
+
 /**
  * Servlet implementation class UsuarioRS
  */
 @Path("/")
 public class UsuarioRS {
 	private static UsuarioList usuarioList;
-    public UsuarioRS() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-    @GET
+
+	public UsuarioRS() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@GET
 	@Path("/xml")
 	@Produces({ MediaType.APPLICATION_XML })
 	public UsuarioList getXml() {
@@ -54,13 +56,16 @@ public class UsuarioRS {
 		usuarioList = new UsuarioList(nomb);
 		return usuarioList;
 	}
-	
+
 	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("nomb_usua") String nomb_usua,@FormParam("apel_usua") String apel_usua,@FormParam("dire_usua") String dire_usua,@FormParam("tele_usua") String tele_usua,
-			@FormParam("dui_usua") String dui_usua,@FormParam("nit_usua") String nit_usua,@FormParam("pasa_usua") String pasa_usua,@FormParam("corr_usua") String corr_usua,@FormParam("codi_tipo") int codi_tipo,
-			@FormParam("cont_usua") String cont_usua) {
+	public Response Create(@FormParam("nomb_usua") String nomb_usua, @FormParam("apel_usua") String apel_usua,
+			@FormParam("dire_usua") String dire_usua, @FormParam("tele_usua") String tele_usua,
+			@FormParam("dui_usua") String dui_usua, @FormParam("nit_usua") String nit_usua,
+			@FormParam("pasa_usua") String pasa_usua, @FormParam("corr_usua") String corr_usua,
+			@FormParam("codi_tipo") int codi_tipo, @FormParam("cont_usua") String cont_usua,
+			@FormParam("lice_usua") String lice_usua) {
 		usuarioList = new UsuarioList(false);
 		String msg;
 		if (nomb_usua == null) {
@@ -104,7 +109,8 @@ public class UsuarioRS {
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
 		try {
-			String resp = usuarioList.add(nomb_usua,apel_usua,dire_usua,tele_usua,dui_usua, nit_usua,pasa_usua,  corr_usua, codi_tipo, cont_usua);
+			String resp = usuarioList.add(nomb_usua, apel_usua, dire_usua, tele_usua, dui_usua, nit_usua, pasa_usua,
+					lice_usua, corr_usua, codi_tipo, cont_usua);
 			return Response.ok(resp, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -116,9 +122,12 @@ public class UsuarioRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi_usua") int codi_usua,@FormParam("nomb_usua") String nomb_usua,@FormParam("apel_usua") String apel_usua,@FormParam("dire_usua") String dire_usua,@FormParam("tele_usua") String tele_usua,
-			@FormParam("dui_usua") String dui_usua,@FormParam("nit_usua") String nit_usua,@FormParam("pasa_usua") String pasa_usua,@FormParam("corr_usua") String corr_usua,@FormParam("codi_tipo") int codi_tipo,
-			@FormParam("cont_usua") String cont_usua) {
+	public Response Update(@FormParam("codi_usua") int codi_usua, @FormParam("nomb_usua") String nomb_usua,
+			@FormParam("apel_usua") String apel_usua, @FormParam("dire_usua") String dire_usua,
+			@FormParam("tele_usua") String tele_usua, @FormParam("dui_usua") String dui_usua,
+			@FormParam("nit_usua") String nit_usua, @FormParam("pasa_usua") String pasa_usua,
+			@FormParam("corr_usua") String corr_usua, @FormParam("codi_tipo") int codi_tipo,
+			@FormParam("lice_usua") String lice_usua) {
 		usuarioList = new UsuarioList(false);
 		String msg;
 		if (codi_usua < 0) {
@@ -157,22 +166,38 @@ public class UsuarioRS {
 			msg = "Debe especificar el correo del usuario";
 			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 		}
-		if (codi_tipo < 1) {
-			msg = "Debe especificar el tipo de usuario";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
-		if (cont_usua == null) {
-			msg = "Debe especificar la contraseña del usuario";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
 		try {
-			String id = usuarioList.update(codi_usua, nomb_usua,apel_usua,dire_usua,tele_usua,dui_usua, nit_usua,pasa_usua,  corr_usua, codi_tipo, cont_usua);
+			String id = usuarioList.update(codi_usua, nomb_usua, apel_usua, dire_usua, tele_usua, dui_usua, nit_usua,
+					pasa_usua, corr_usua, codi_tipo, lice_usua);
 			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		msg = "No se modifico el usuario";
+		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
+	}
+
+	@PUT
+	@Path("/updatePassword")
+	@Produces({ MediaType.TEXT_PLAIN })
+	public Response UpdatePassword(@FormParam("codi") int codi_usua, @FormParam("vieja") String vieja,
+			@FormParam("nueva") String nueva) {
+		usuarioList = new UsuarioList(false);
+		String msg;
+		try {
+			String r = usuarioList.updatePassword(codi_usua, vieja, nueva);
+			if (r == "1") {
+				msg = "Se pudo modificar";
+				return Response.ok(msg, "text/plain").build();
+			} else {
+				msg = "No se pudo modificar";
+				return Response.ok(msg, "text/plain").build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		msg = "No se pudo modificar la contra";
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 
@@ -200,6 +225,5 @@ public class UsuarioRS {
 		}
 		return Response.ok(msg, "text/plain").build();
 	}
-	
 
 }

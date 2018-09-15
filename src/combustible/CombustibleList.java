@@ -1,6 +1,7 @@
 package combustible;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,15 +12,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import conexion.Conexion;
+
 @XmlRootElement(name = "combustibleList")
 @XmlSeeAlso({ Combustible.class })
 public class CombustibleList {
+	private Connection conn;
 	private List<Combustible> arts;
-	String url = "jdbc:mysql://rentadb.c9bf3mte5srb.us-east-2.rds.amazonaws.com:3306/";
-	String dbName = "rentadb";
-	String driver = "com.mysql.jdbc.Driver";
-	String userName = "adminrenta";
-	String password = "fslrenta";
 	String param;
 
 	CombustibleList() {
@@ -55,25 +54,19 @@ public class CombustibleList {
 		this.arts = arts;
 	}
 
-	public Connection conn()
-			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-		Class.forName(driver).newInstance();
-		Connection conn = DriverManager.getConnection(url + dbName, userName, password);
-		return conn;
-	}
-
 	public List<Combustible> getCombustibleList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_comb = '" + param + "'";
+				whereQuery = " AND codi_comb = '" + param + "' ";
 		}
-		Connection conn = conn();
-		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM rentadb.combustible " + whereQuery);
+		this.conn = new Conexion().conn() ;
+		PreparedStatement cmd = this.conn.prepareStatement("SELECT * FROM combustible WHERE esta_comb = 1" + whereQuery);
+		ResultSet res = cmd.executeQuery();
 		while (res.next()) {
 			Combustible tmpCombustible = new Combustible();
-			tmpCombustible.setCodi_comb(Integer.parseInt(res.getString("codi_comb")));
-			tmpCombustible.setNomb_comb(res.getString("nomb_comb"));
+			tmpCombustible.setCodi_comb(Integer.parseInt(res.getString(1)));
+			tmpCombustible.setNomb_comb(res.getString(2));
+			tmpCombustible.setEsta_Comb(Integer.parseInt(res.getString(3)));
 			arts.add(tmpCombustible);
 		}
 		return arts;
@@ -81,10 +74,10 @@ public class CombustibleList {
 	public String add(String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "INSERT INTO combustible(nomb_comb) VALUES('"+nomb+"')";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn() ;
+			PreparedStatement cmd = conn.prepareStatement("INSERT INTO combustible VALUES (NULL, ?, 1)");
+			cmd.setString(1, nomb);
+			cmd.executeUpdate();
 			resp = "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,10 +92,11 @@ public class CombustibleList {
 	public String update(int codi,String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "UPDATE combustible SET nomb_comb = '"+nomb+"' WHERE codi_comb ='"+codi+"'";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn() ;
+			PreparedStatement cmd = this.conn.prepareStatement("UPDATE combustible SET nomb_comb = ? WHERE codi_comb = ?");
+			cmd.setString(1, nomb);
+			cmd.setInt(2, codi);
+			cmd.executeUpdate();
 			resp= "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,12 +107,20 @@ public class CombustibleList {
 		return 0;
 	}
 
-	public int delete(int codi) throws Exception {
-		int affectedRows = -1;
-		String sql = "DELETE FROM combustible WHERE codi_comb= " + codi;
-		Connection conn = conn();
-		Statement st = conn.createStatement();
-		affectedRows = st.executeUpdate(sql);
-		return affectedRows;
+	public boolean delete(int codi) throws Exception {
+		boolean resp = false;
+		try {
+			this.conn = new Conexion().conn() ;
+			PreparedStatement cmd = this.conn.prepareStatement("UPDATE combustible SET esta_comb = 0 WHERE codi_comb = ?");
+			cmd.setInt(1, codi);
+			cmd.executeUpdate();
+			resp = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resp;
+	}
+	public int delete() {
+		return 0;
 	}
 }

@@ -15,6 +15,8 @@ public class Usuario {
 	String cont_usua;
 	int codi_tipo;
 	String nomb_tipo;
+	String lice_usua;
+	int esta_usua;
 	@XmlElement
 	public int getCodi_usua() {
 		return codi_usua;
@@ -110,6 +112,22 @@ public class Usuario {
 
 	public void setNomb_tipo(String nomb_tipo) {
 		this.nomb_tipo = nomb_tipo;
+	}
+	@XmlElement
+	public String getLice_usua() {
+		return lice_usua;
+	}
+
+	public void setLice_usua(String lice_usua) {
+		this.lice_usua = lice_usua;
+	}
+	@XmlElement
+	public int getEsta_usua() {
+		return esta_usua;
+	}
+
+	public void setEsta_usua(int esta_usua) {
+		this.esta_usua = esta_usua;
 	}
 	
 }

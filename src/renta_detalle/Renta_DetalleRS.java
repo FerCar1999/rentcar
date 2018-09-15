@@ -1,6 +1,5 @@
 package renta_detalle;
 
-import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -53,7 +52,7 @@ public class Renta_DetalleRS {
 	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("usua") int usua,@FormParam("vehi") int vehi,@FormParam("fechRe") String fechRe,@FormParam("fechDe") String fechDe,@FormParam("tipo") int tipo) {
+	public Response UpdateCero(@FormParam("usua") int usua,@FormParam("vehi") int vehi,@FormParam("fechRe") String fechRe,@FormParam("fechDe") String fechDe,@FormParam("tipo") int tipo) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
 		if (usua == 0) {
@@ -73,7 +72,7 @@ public class Renta_DetalleRS {
 	@PUT
 	@Path("/updateTotal")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") int codi,@FormParam("total") double total) {
+	public Response UpdateUno(@FormParam("codi") int codi,@FormParam("total") double total) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
 		if (total == 0.00) {
@@ -93,46 +92,18 @@ public class Renta_DetalleRS {
 	@PUT
 	@Path("/updateEsta")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") int codi,@FormParam("esta") int esta) {
+	public Response UpdateDos(@FormParam("codi") int codi) {
 		renta_detalleList = new Renta_DetalleList(false);
 		String msg;
-		if (esta < 0) {
-			msg = "Debe especificar el estado";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		}
 		try {
-			String id = renta_detalleList.updateEstado(codi, esta);
+			String id = renta_detalleList.updateEstado(codi);
 			msg = " Se ha modificado con el id: " + id;
 			return Response.ok(msg, "text/plain").build();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		msg = "No se modifico el album";
+		msg = "No se modifico";
 		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 
-	@DELETE
-	@Path("/delete/{codi: \\d+}")
-	@Produces({ MediaType.TEXT_PLAIN })
-	public Response delete(@PathParam("codi") int codi) {
-		renta_detalleList = new Renta_DetalleList(false);
-		int affectedRows = -1;
-		try {
-			affectedRows = renta_detalleList.delete(codi);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		String msg;
-		if (affectedRows == 0) {
-			msg = "Ese registro no existe";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		} else if (affectedRows == -1) {
-			msg = "No se pudo borrar";
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).type(MediaType.TEXT_PLAIN)
-					.build();
-		} else {
-			msg = "Exito";
-		}
-		return Response.ok(msg, "text/plain").build();
-	}
 }

@@ -73,7 +73,7 @@ public class Tipo_VehiculoRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb) {
+	public Response Update(@FormParam("codi") int codi, @FormParam("nomb") String nomb) {
 		tipo_vehiculoList = new Tipo_VehiculoList(false);
 		String msg;
 		if (nomb == null) {
@@ -96,23 +96,16 @@ public class Tipo_VehiculoRS {
 	@Produces({ MediaType.TEXT_PLAIN })
 	public Response delete(@PathParam("codi") int codi) {
 		tipo_vehiculoList = new Tipo_VehiculoList(false);
-		int affectedRows = -1;
+		String msg;
 		try {
-			affectedRows = tipo_vehiculoList.delete(codi);
+			if (tipo_vehiculoList.delete(codi)) {
+				msg = "Exito";
+				return Response.ok(msg, "text/plain").build();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String msg;
-		if (affectedRows == 0) {
-			msg = "Ese registro no existe";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		} else if (affectedRows == -1) {
-			msg = "No se pudo borrar";
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).type(MediaType.TEXT_PLAIN)
-					.build();
-		} else {
-			msg = "Exito";
-		}
-		return Response.ok(msg, "text/plain").build();
+		msg = "No se pudo eliminar el registro";
+		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 }

@@ -73,7 +73,7 @@ public class Renta_MaestroRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response UpdateX(@FormParam("codi") int codi,@FormParam("serv") int serv, @FormParam("desc") String desc) {
+	public Response UpdateX(@FormParam("codi") int codi, @FormParam("serv") int serv, @FormParam("desc") String desc) {
 		rentaMaestroList = new Renta_MaestroList(false);
 		String msg;
 		if (codi == 0) {

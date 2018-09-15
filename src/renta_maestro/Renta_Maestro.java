@@ -1,13 +1,16 @@
 package renta_maestro;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlElement;
-@XmlRootElement( name = "rentamaestro" )
+
+@XmlRootElement(name = "rentamaestro")
 public class Renta_Maestro {
 	int codi_rent_maes;
 	int codi_rent_deta;
 	int codi_tipo_serv;
 	String tipo_serv;
 	String desc_maes;
+
 	@XmlElement
 	public int getCodi_rent_maes() {
 		return codi_rent_maes;
@@ -16,7 +19,8 @@ public class Renta_Maestro {
 	public void setCodi_rent_maes(int codi_rent_maes) {
 		this.codi_rent_maes = codi_rent_maes;
 	}
-@XmlElement
+
+	@XmlElement
 	public int getCodi_rent_deta() {
 		return codi_rent_deta;
 	}
@@ -24,7 +28,8 @@ public class Renta_Maestro {
 	public void setCodi_rent_deta(int codi_rent_deta) {
 		this.codi_rent_deta = codi_rent_deta;
 	}
-@XmlElement
+
+	@XmlElement
 	public int getCodi_tipo_serv() {
 		return codi_tipo_serv;
 	}
@@ -32,8 +37,9 @@ public class Renta_Maestro {
 	public void setCodi_tipo_serv(int codi_tipo_serv) {
 		this.codi_tipo_serv = codi_tipo_serv;
 	}
+
 	@XmlElement
-public String getTipo_serv() {
+	public String getTipo_serv() {
 		return tipo_serv;
 	}
 
@@ -41,7 +47,7 @@ public String getTipo_serv() {
 		this.tipo_serv = tipo_serv;
 	}
 
-@XmlElement
+	@XmlElement
 	public String getDesc_maes() {
 		return desc_maes;
 	}

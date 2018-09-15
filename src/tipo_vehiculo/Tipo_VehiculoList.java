@@ -1,6 +1,7 @@
 package tipo_vehiculo;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,15 +11,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import com.sun.corba.se.spi.orbutil.fsm.Guard.Result;
+
+import conexion.Conexion;
+
 @XmlRootElement(name = "tipoVehiculoList")
 @XmlSeeAlso({ Tipo_Vehiculo.class })
 public class Tipo_VehiculoList {
 	private List<Tipo_Vehiculo> arts;
-	String url = "jdbc:mysql://rentadb.c9bf3mte5srb.us-east-2.rds.amazonaws.com:3306/";
-	String dbName = "rentadb";
-	String driver = "com.mysql.jdbc.Driver";
-	String userName = "adminrenta";
-	String password = "fslrenta";
+	private Connection conn;
 	String param;
 
 	Tipo_VehiculoList() {
@@ -41,38 +42,32 @@ public class Tipo_VehiculoList {
 	}
 
 	@XmlElement
-	public List getTipo_Vehiculo() {
+	public List getTipoVehiculo() {
 		try {
-			arts = getTipo_VehiculoList(param);
+			arts = getTipoVehiculoList(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return this.arts;
 	}
 
-	public void setTipo_Vehiculo(List<Tipo_Vehiculo> arts) {
+	public void setTipoVehiculo(List<Tipo_Vehiculo> arts) {
 		this.arts = arts;
 	}
 
-	public Connection conn()
-			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-		Class.forName(driver).newInstance();
-		Connection conn = DriverManager.getConnection(url + dbName, userName, password);
-		return conn;
-	}
-
-	public List<Tipo_Vehiculo> getTipo_VehiculoList(String param) throws Exception {
+	public List<Tipo_Vehiculo> getTipoVehiculoList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_tipo = '" + param + "'";
+				whereQuery = " AND codi_tipo = '" + param + "'";
 		}
-		Connection conn = conn();
-		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM tipo_vehiculo " + whereQuery);
+		this.conn = new Conexion().conn();
+		PreparedStatement cmd = this.conn.prepareStatement("SELECT * FROM tipo_vehiculo WHERE esta_tipo_vehi=1 "+ whereQuery);
+		ResultSet res = cmd.executeQuery();
 		while (res.next()) {
 			Tipo_Vehiculo tmpTipo_Vehiculo = new Tipo_Vehiculo();
-			tmpTipo_Vehiculo.setCodi_tipo(Integer.parseInt(res.getString("codi_tipo")));
-			tmpTipo_Vehiculo.setTipo_vehi(res.getString("tipo_vehi"));
+			tmpTipo_Vehiculo.setCodi_tipo(res.getInt(1));
+			tmpTipo_Vehiculo.setTipo_vehi(res.getString(2));
+			tmpTipo_Vehiculo.setEsta_tipo_vehi(res.getInt(3));
 			arts.add(tmpTipo_Vehiculo);
 		}
 		return arts;
@@ -80,10 +75,10 @@ public class Tipo_VehiculoList {
 	public String add(String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "INSERT INTO tipo_vehiculo(tipo_vehi) VALUES('"+nomb+"')";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn();
+			PreparedStatement cmd = this.conn.prepareStatement("INSERT INTO tipo_vehiculo VALUES(NULL, ?, 1)");
+			cmd.setString(1, nomb);
+			cmd.executeUpdate();
 			resp = "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,10 +93,11 @@ public class Tipo_VehiculoList {
 	public String update(int codi,String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "UPDATE tipo_vehiculo SET tipo_vehi = '"+nomb+"' WHERE codi_tipo ='"+codi+"'";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn();
+			PreparedStatement cmd = this.conn.prepareStatement("UPDATE tipo_vehiculo SET tipo_vehi=? WHERE codi_tipo_vehi=?");
+			cmd.setString(1, nomb);
+			cmd.setInt(2, codi);
+			cmd.executeUpdate();
 			resp= "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -112,12 +108,20 @@ public class Tipo_VehiculoList {
 		return 0;
 	}
 
-	public int delete(int codi) throws Exception {
-		int affectedRows = -1;
-		String sql = "DELETE FROM tipo_vehi WHERE codi_tipo= " + codi;
-		Connection conn = conn();
-		Statement st = conn.createStatement();
-		affectedRows = st.executeUpdate(sql);
-		return affectedRows;
+	public boolean delete(int codi) throws Exception {
+		boolean resp = false;
+		try {
+			this.conn = new Conexion().conn() ;
+			PreparedStatement cmd = this.conn.prepareStatement("UPDATE tipo_vehiculo SET esta_tipo_vehi= 0 WHERE codi_tipo_vehi= ?");
+			cmd.setInt(1, codi);
+			cmd.executeUpdate();
+			resp = true;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return resp;
+	}
+	public int delete() {
+		return 0;
 	}
 }

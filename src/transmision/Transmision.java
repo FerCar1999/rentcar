@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class Transmision {
 	int codi_tran;
 	String nomb_tran;
+	int esta_tran;
 	@XmlElement
 	public int getCodi_tran() {
 		return codi_tran;
@@ -21,6 +22,13 @@ public class Transmision {
 	public void setNomb_tran(String nomb_tran) {
 		this.nomb_tran = nomb_tran;
 	}
-	
+	@XmlElement
+	public int getEsta_tran() {
+		return esta_tran;
+	}
+
+	public void setEsta_tran(int esta_tran) {
+		this.esta_tran = esta_tran;
+	}
 	
 }

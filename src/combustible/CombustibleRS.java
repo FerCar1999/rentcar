@@ -73,7 +73,7 @@ public class CombustibleRS {
 	@PUT
 	@Path("/update")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("codi") int codi,@FormParam("nomb") String nomb) {
+	public Response Update(@FormParam("codi") int codi, @FormParam("nomb") String nomb) {
 		combustibleList = new CombustibleList(false);
 		String msg;
 		if (nomb == null) {
@@ -94,25 +94,18 @@ public class CombustibleRS {
 	@DELETE
 	@Path("/delete/{codi: \\d+}")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response delete(@PathParam("codi") int codi) {
+	public Response delete(@PathParam("codi") int codi){
 		combustibleList = new CombustibleList(false);
-		int affectedRows = -1;
-		try {
-			affectedRows = combustibleList.delete(codi);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		String msg;
-		if (affectedRows == 0) {
-			msg = "Ese registro no existe";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		} else if (affectedRows == -1) {
-			msg = "No se pudo borrar";
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).type(MediaType.TEXT_PLAIN)
-					.build();
-		} else {
-			msg = "Exito";
-		}
-		return Response.ok(msg, "text/plain").build();
+			try {
+				if (combustibleList.delete(codi)) {
+					msg = "Exito";
+					return Response.ok(msg, "text/plain").build();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			msg = "No se pudo eliminar el registro";
+		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 }

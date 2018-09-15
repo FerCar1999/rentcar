@@ -53,7 +53,7 @@ public class Tipo_PagoRS {
 	@POST
 	@Path("/create")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response Update(@FormParam("nomb") String nomb) {
+	public Response Create(@FormParam("nomb") String nomb) {
 		tipo_pagoList = new Tipo_PagoList(false);
 		String msg;
 		if (nomb == null) {
@@ -94,25 +94,18 @@ public class Tipo_PagoRS {
 	@DELETE
 	@Path("/delete/{codi: \\d+}")
 	@Produces({ MediaType.TEXT_PLAIN })
-	public Response delete(@PathParam("codi") int codi) {
+	public Response delete(@PathParam("codi") int codi){
 		tipo_pagoList = new Tipo_PagoList(false);
-		int affectedRows = -1;
-		try {
-			affectedRows = tipo_pagoList.delete(codi);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		String msg;
-		if (affectedRows == 0) {
-			msg = "Ese registro no existe";
-			return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
-		} else if (affectedRows == -1) {
-			msg = "No se pudo borrar";
-			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(msg).type(MediaType.TEXT_PLAIN)
-					.build();
-		} else {
-			msg = "Exito";
-		}
-		return Response.ok(msg, "text/plain").build();
+			try {
+				if (tipo_pagoList.delete(codi)) {
+					msg = "Exito";
+					return Response.ok(msg, "text/plain").build();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			msg = "No se pudo eliminar el registro";
+		return Response.status(Response.Status.BAD_REQUEST).entity(msg).type(MediaType.TEXT_PLAIN).build();
 	}
 }

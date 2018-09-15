@@ -1,6 +1,7 @@
 package licencia;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,15 +12,13 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
+import conexion.Conexion;
+
 @XmlRootElement(name = "licenciaList")
 @XmlSeeAlso({ Licencia.class })
 public class LicenciaList {
+	private Connection conn;
 	private List<Licencia> arts;
-	String url = "jdbc:mysql://rentadb.c9bf3mte5srb.us-east-2.rds.amazonaws.com:3306/";
-	String dbName = "rentadb";
-	String driver = "com.mysql.jdbc.Driver";
-	String userName = "adminrenta";
-	String password = "fslrenta";
 	String param;
 
 	LicenciaList() {
@@ -55,25 +54,19 @@ public class LicenciaList {
 		this.arts = arts;
 	}
 
-	public Connection conn()
-			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException {
-		Class.forName(driver).newInstance();
-		Connection conn = DriverManager.getConnection(url + dbName, userName, password);
-		return conn;
-	}
-
 	public List<Licencia> getLicenciaList(String param) throws Exception {
 		String whereQuery = "";
 		if (param != null) {
-				whereQuery = " WHERE codi_lice = '" + param + "'";
+				whereQuery = " AND codi_lice = '" + param + "'";
 		}
-		Connection conn = conn();
-		Statement st = conn.createStatement();
-		ResultSet res = st.executeQuery("SELECT * FROM licencia " + whereQuery);
+		this.conn = new Conexion().conn();
+		PreparedStatement cmd = this.conn.prepareStatement("SELECT * FROM licencia WHERE esta_lice = 1 " + whereQuery);
+		ResultSet res = cmd.executeQuery();
 		while (res.next()) {
 			Licencia tmpLicencia = new Licencia();
-			tmpLicencia.setCodi_lice(Integer.parseInt(res.getString("codi_lice")));
-			tmpLicencia.setNomb_lice(res.getString("nomb_lice"));
+			tmpLicencia.setCodi_lice(Integer.parseInt(res.getString(1)));
+			tmpLicencia.setNomb_lice(res.getString(2));
+			tmpLicencia.setEsta_lice(Integer.parseInt(res.getString(3)));
 			arts.add(tmpLicencia);
 		}
 		return arts;
@@ -81,10 +74,10 @@ public class LicenciaList {
 	public String add(String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "INSERT INTO licencia(nomb_lice) VALUES('"+nomb+"')";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn();
+			PreparedStatement cmd = this.conn.prepareStatement("INSERT INTO licencia VALUES(NULL, ?, 1)");
+			cmd.setString(1, nomb);
+			cmd.executeUpdate();
 			resp = "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,10 +92,11 @@ public class LicenciaList {
 	public String update(int codi,String nomb) throws Exception {
 		String resp = "0";
 		try {
-			Connection conn = conn();
-			Statement st = conn.createStatement();
-			String sql = "UPDATE licencia SET nomb_lice = '"+nomb+"' WHERE codi_lice ='"+codi+"'";
-			st.executeUpdate(sql);
+			this.conn = new Conexion().conn();
+			PreparedStatement cmd = this.conn.prepareStatement("UPDATE licencia SET nomb_lice = ? WHERE codi_lice = ?");
+			cmd.setString(1, nomb);
+			cmd.setInt(2, codi);
+			cmd.executeUpdate();
 			resp= "1";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -115,8 +109,8 @@ public class LicenciaList {
 
 	public int delete(int codi) throws Exception {
 		int affectedRows = -1;
-		String sql = "DELETE FROM licencia WHERE codi_lice= " + codi;
-		Connection conn = conn();
+		String sql = "UPDATE licencia SET esta_lice = 0  WHERE codi_lice= " + codi;
+		this.conn = new Conexion().conn();
 		Statement st = conn.createStatement();
 		affectedRows = st.executeUpdate(sql);
 		return affectedRows;
